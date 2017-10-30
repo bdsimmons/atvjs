@@ -96,6 +96,11 @@ let handlers = {
             let element = e.target;
             let menuId = element.getAttribute('id');
             let elementType = element.nodeName.toLowerCase();
+            var optionsString = element.getAttribute('options');
+            var options = {};
+            if (optionsString && optionsString.length > 1) {
+                options = JSON.parse(optionsString);
+            }
             let page = element.page;
 
             if (elementType === 'menuitem') {
@@ -104,7 +109,7 @@ let handlers = {
                     // set a loading message intially to the menuitem
                     Menu.setDocument(Navigation.getLoaderDoc(Menu.getLoadingMessage()), menuId)
                     // load the page
-                    page().then((doc) => {
+                    page(options).then((doc) => {
                         // if there is a document loaded, assign it to the menuitem
                         if (doc) {
                             // assign the pageDoc to disable reload everytime

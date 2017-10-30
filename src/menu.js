@@ -42,8 +42,14 @@ function setOptions(cfg = {}) {
  * @param {Object} attributes 	Attributes key value pairs.
  */
 function setAttributes(el, attributes) {
-	console.log('setting attributes on element...', el, attributes);
-    _.each(attributes, (value, name) => el.setAttribute(name, value));
+    console.log('setting attributes on element...', el, attributes);
+    _.each(attributes, (value, name) => {
+        if (_.isObject(value)) {
+            el.setAttribute(name, JSON.stringify(value));
+        } else {
+            el.setAttribute(name, value);
+        }
+    });
 }
 
 /**
